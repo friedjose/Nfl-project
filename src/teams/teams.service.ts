@@ -1,3 +1,4 @@
+// teams.service.ts
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateTeamDto } from './dto/create-team.dto';
 import { UpdateTeamDto } from './dto/update-team.dto';
@@ -11,8 +12,23 @@ export class TeamsService {
     return this.prisma.team.create({ data: dto });
   }
 
-  async findAll() {
-    return this.prisma.team.findMany();
+  async findAll(page = 1, limit = 6, search?: string) {
+    const skip = (page - 1) * limit;
+    const where = search
+      ? { name: { contains: search } }
+      : undefined;
+
+    const [data, total] = await Promise.all([
+      this.prisma.team.findMany({ where, skip, take: limit }),
+      this.prisma.team.count({ where }),
+    ]);
+
+    return {
+      data,
+      total,
+      page,
+      totalPages: Math.ceil(total / limit),
+    };
   }
 
   async findOne(id: number) {
@@ -22,7 +38,7 @@ export class TeamsService {
   }
 
   async update(id: number, dto: UpdateTeamDto) {
-    await this.findOne(id); 
+    await this.findOne(id);
     return this.prisma.team.update({ where: { id }, data: dto });
   }
 
