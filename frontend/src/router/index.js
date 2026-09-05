@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import TeamsView from '../views/TeamsView.vue';
+import TeamsView from '../views/TeamsViews.vue';
 
 const routes = [
   { path: '/', name: 'teams', component: TeamsView },

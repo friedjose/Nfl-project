@@ -1,0 +1,91 @@
+### Listar equipos (con paginación y búsqueda)
+GET http://localhost:3000/teams?page=1&limit=6&search=
+
+### Crear: Kansas City Chiefs
+POST http://localhost:3000/teams
+Content-Type: application/json
+
+{
+  "name": "Kansas City Chiefs",
+  "city": "Kansas City",
+  "conference": "AFC",
+  "image": "https://cdn.freebiesupply.com/images/large/2x/kansas-city-chiefs-logo-transparent.png"
+}
+
+### Crear: Philadelphia Eagles
+POST http://localhost:3000/teams
+Content-Type: application/json
+
+{
+  "name": "Philadelphia Eagles",
+  "city": "Philadelphia",
+  "conference": "NFC",
+  "image": "https://cdn.freebiesupply.com/images/large/2x/philadelphia-eagles-logo-transparent.png"
+}
+
+### Crear: Dallas Cowboys
+POST http://localhost:3000/teams
+Content-Type: application/json
+
+{
+  "name": "Dallas Cowboys",
+  "city": "Dallas",
+  "conference": "NFC",
+  "image": "https://cdn.freebiesupply.com/images/large/2x/dallas-cowboys-logo-transparent.png"
+}
+
+### Crear: San Francisco 49ers
+POST http://localhost:3000/teams
+Content-Type: application/json
+
+{
+  "name": "San Francisco 49ers",
+  "city": "San Francisco",
+  "conference": "NFC",
+  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/San_Francisco_49ers_logo.svg/3840px-San_Francisco_49ers_logo.svg.png"
+}
+
+### Crear: Buffalo Bills
+POST http://localhost:3000/teams
+Content-Type: application/json
+
+{
+  "name": "Buffalo Bills",
+  "city": "Buffalo",
+  "conference": "AFC",
+  "image": "https://cdn.freebiesupply.com/images/large/2x/buffalo-bills-logo-transparent.png"
+}
+
+###Crear : Miami Dolphins
+POST http://localhost:3000/teams
+Content-Type: application/json
+
+{
+  "name": "Miami Dolphins",
+  "city": "Miami",
+  "conference": "AFC",
+  "image": "https://cdn.freebiesupply.com/images/large/2x/miami-dolphins-logo-transparent.png"
+}
+###crear : New England Patriots
+POST http://localhost:3000/teams
+Content-Type: application/json
+
+{
+  "name": "New England Patriots",
+  "city": "New England",
+  "conference": "AFC",
+  "image": "https://cdn.freebiesupply.com/images/large/2x/new-england-patriots-logo-transparent.png"
+}
+### Buscar uno (reemplaza el 1 por el id real)
+GET http://localhost:3000/teams/1
+
+### Editar uno (reemplaza el 1 por el id real)
+PATCH http://localhost:3000/teams/1
+Content-Type: application/json
+
+{
+  "name": "KC Chiefs"
+}
+
+### Eliminar uno (reemplaza el 1 por el id real)
+DELETE http://localhost:3000/teams/1
