@@ -1,7 +1,7 @@
-<!-- src/views/TeamsView.vue -->
 <template>
   <div class="teams-view">
     <div class="header">
+      <button v-if="isAuthenticated()" @click="handleLogout">Logout</button>
       <h1>Equipos NFL</h1>
       <button @click="openCreateForm">+ Nuevo Equipo</button>
     </div>
@@ -43,9 +43,14 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import TeamCard from '../components/TeamCard.vue';
 import TeamForm from '../components/TeamForm.vue';
 import { getTeams, createTeam, updateTeam, deleteTeam } from '../services/teams';
+import { useAuth } from '../composables/useAuth';
+
+const { isAuthenticated, logout } = useAuth();
+const router = useRouter();
 
 const teams = ref([]);
 const search = ref('');
@@ -122,6 +127,11 @@ async function handleDelete(id) {
   } catch (err) {
     console.error(err);
   }
+}
+
+function handleLogout() {
+  logout();
+  router.push('/login');
 }
 
 onMounted(loadTeams);

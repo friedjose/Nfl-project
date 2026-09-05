@@ -1,4 +1,7 @@
+import { useAuth } from '../composables/useAuth';
 const API_URL = import.meta.env.VITE_API_URL;
+const { authHeader } = useAuth();
+
 
 export async function getTeams(page = 1, limit = 6, search = '') {
   const params = new URLSearchParams({ page, limit, search });
@@ -16,7 +19,7 @@ export async function getTeam(id) {
 export async function createTeam(data) {
   const res = await fetch(`${API_URL}/teams`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', ...authHeader() },
     body: JSON.stringify(data),
   });
   if (!res.ok) throw new Error('Error al crear el equipo');
@@ -26,7 +29,7 @@ export async function createTeam(data) {
 export async function updateTeam(id, data) {
   const res = await fetch(`${API_URL}/teams/${id}`, {
     method: 'PATCH',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', ...authHeader() },
     body: JSON.stringify(data),
   });
   if (!res.ok) throw new Error('Error al actualizar el equipo');
@@ -34,7 +37,10 @@ export async function updateTeam(id, data) {
 }
 
 export async function deleteTeam(id) {
-  const res = await fetch(`${API_URL}/teams/${id}`, { method: 'DELETE' });
+  const res = await fetch(`${API_URL}/teams/${id}`, {
+    method: 'DELETE',
+    headers: { ...authHeader() }
+  });
   if (!res.ok) throw new Error('Error al eliminar el equipo');
   return res.json();
 }

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UseGuards } from '@nestjs/common';
 import { TeamsService } from './teams.service';
 import { CreateTeamDto } from './dto/create-team.dto';
 import { UpdateTeamDto } from './dto/update-team.dto';
@@ -15,10 +15,22 @@ export class TeamsController {
   }
 
   @Get()
-  findAll(/* ... */) { /* sin guard, es lectura pública */ }
+  findAll(
+    @Query('page') page?: string,
+    @Query('limit') limit?: string,
+    @Query('search') search?: string,
+  ) {
+    return this.teamsService.findAll(
+      page ? +page : 1,
+      limit ? +limit : 6,
+      search,
+    );
+  }
 
   @Get(':id')
-  findOne(/* ... */) { /* sin guard */ }
+  findOne(@Param('id') id: string) {
+    return this.teamsService.findOne(+id);
+  }
 
   @UseGuards(AuthGuard)
   @Patch(':id')
