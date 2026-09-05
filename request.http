@@ -88,4 +88,71 @@ Content-Type: application/json
 }
 
 ### Eliminar uno (reemplaza el 1 por el id real)
-DELETE http://localhost:3000/teams/1
+DELETE http://localhost:3000/teams/8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3ODg2MTU3MTksImV4cCI6MTc4ODYxOTMxOX0.zZlwDjQxPAAAeLyMHbI_97GxDjR3RZr0o9ZWnZbqlR4
+
+### 1. Registrar usuario nuevo
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "clave123"
+}
+
+### 2. Intentar registrar el MISMO usuario otra vez (debe dar 409 Conflict)
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "clave123"
+}
+
+### 3. Login con credenciales correctas (debe devolver access_token)
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "clave123"
+}
+
+### 4. Login con contraseña incorrecta (debe dar 401 Unauthorized)
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "clave-incorrecta"
+}
+
+### 5. Ver perfil SIN token (debe dar 401)
+GET http://localhost:3000/auth/profile
+
+### 6. Ver perfil CON token (pega el access_token del paso 3)
+GET http://localhost:3000/auth/profile
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3ODg2MTU3MTksImV4cCI6MTc4ODYxOTMxOX0.zZlwDjQxPAAAeLyMHbI_97GxDjR3RZr0o9ZWnZbqlR4
+
+### 7. Crear equipo SIN token (debe dar 401, confirma que el guard protege escritura)
+POST http://localhost:3000/teams
+Content-Type: application/json
+
+{
+  "name": "Test Team", "city": "Test City", "conference": "AFC", "image": "https://picsum.photos/300/200"
+}
+
+### 8. Crear equipo CON token (debe funcionar, 201 Created)
+POST http://localhost:3000/teams
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3ODg2MTU3MTksImV4cCI6MTc4ODYxOTMxOX0.zZlwDjQxPAAAeLyMHbI_97GxDjR3RZr0o9ZWnZbqlR4
+
+{
+  "name": "Test Team", "city": "Test City", "conference": "AFC", "image": "https://picsum.photos/300/200"
+}
+
+### 9. Editar equipo SIN token (debe dar 401)
+PATCH http://localhost:3000/teams/1
+
+### 10. Listar equipos SIN token (debe funcionar igual, la lectura es pública)
+GET http://localhost:3000/teams?page=1&limit=6
