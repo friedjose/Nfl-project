@@ -2,8 +2,9 @@
   <div class="teams-view">
     <div class="header">
       <button v-if="isAuthenticated()" @click="handleLogout">Logout</button>
+      <router-link v-else to="/login">Login</router-link>
       <h1>Equipos NFL</h1>
-      <button @click="openCreateForm">+ Nuevo Equipo</button>
+      <button v-if="isAuthenticated()" @click="openCreateForm">+ Nuevo Equipo</button>
     </div>
 
     <input
@@ -26,7 +27,7 @@
     <div v-else class="grid">
       <div v-for="team in teams" :key="team.id" class="card-wrapper">
         <TeamCard :team="team" />
-        <div class="card-actions">
+        <div class="card-actions" v-if="isAuthenticated()">
           <button @click="openEditForm(team)">Editar</button>
           <button @click="handleDelete(team.id)">Eliminar</button>
         </div>
@@ -91,11 +92,19 @@ function onSearchChange() {
 }
 
 function openCreateForm() {
+  if (!isAuthenticated()) {
+    router.push('/login');
+    return;
+  }
   editingTeam.value = null;
   showForm.value = true;
 }
 
 function openEditForm(team) {
+  if (!isAuthenticated()) {
+    router.push('/login');
+    return;
+  }
   editingTeam.value = team;
   showForm.value = true;
 }
@@ -120,6 +129,10 @@ async function handleFormSubmit(data) {
 }
 
 async function handleDelete(id) {
+  if (!isAuthenticated()) {
+    router.push('/login');
+    return;
+  }
   if (!confirm('¿Seguro que quieres eliminar este equipo?')) return;
   try {
     await deleteTeam(id);
@@ -128,7 +141,6 @@ async function handleDelete(id) {
     console.error(err);
   }
 }
-
 function handleLogout() {
   logout();
   router.push('/login');
@@ -142,6 +154,14 @@ onMounted(loadTeams);
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+.login-btn {
+  background: #fff;
+  color: #0a0a0f;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
 }
 .grid {
   display: grid;

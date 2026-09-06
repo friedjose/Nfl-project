@@ -5,7 +5,7 @@ import RegisterView from '../views/RegisterView.vue';
 import { useAuth } from '../composables/useAuth';
 
 const routes = [
-  { path: '/', name: 'teams', component: TeamsView, meta: { requiresAuth: true } },
+  { path: '/', name: 'teams', component: TeamsView },
   { path: '/login', name: 'login', component: LoginView },
   { path: '/register', name: 'register', component: RegisterView },
 ];
@@ -15,11 +15,5 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to) => {
-  const { isAuthenticated } = useAuth();
-  if (to.meta.requiresAuth && !isAuthenticated()) {
-    return { name: 'login' };
-  }
-});
 
 export default router;
