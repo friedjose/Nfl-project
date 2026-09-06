@@ -1,18 +1,19 @@
 <template>
   <div class="teams-view">
     <div class="header">
-      <button v-if="isAuthenticated()" @click="handleLogout">Logout</button>
-      <router-link v-else to="/login">Login</router-link>
-      <h1>Equipos NFL</h1>
+      <h1 class="title">Equipos NFL</h1>
       <button v-if="isAuthenticated()" @click="openCreateForm">+ Nuevo Equipo</button>
+      <span v-else class="spacer"></span>
     </div>
 
-    <input
-      v-model="search"
-      @input="onSearchChange"
-      type="text"
-      placeholder="Buscar equipo por nombre..."
-    />
+    <div class="toolbar">
+      <input
+        v-model="search"
+        @input="onSearchChange"
+        type="text"
+        placeholder="Buscar equipo por nombre..."
+      />
+    </div>
 
     <TeamForm
       v-if="showForm"
@@ -21,23 +22,23 @@
       @cancel="closeForm"
     />
 
-    <p v-if="loading">Cargando...</p>
-    <p v-else-if="teams.length === 0">No se encontraron equipos.</p>
+    <p v-if="loading" class="status">Cargando...</p>
+    <p v-else-if="teams.length === 0" class="status">No se encontraron equipos.</p>
 
     <div v-else class="grid">
       <div v-for="team in teams" :key="team.id" class="card-wrapper">
         <TeamCard :team="team" />
         <div class="card-actions" v-if="isAuthenticated()">
-          <button @click="openEditForm(team)">Editar</button>
-          <button @click="handleDelete(team.id)">Eliminar</button>
+          <button class="secondary" @click="openEditForm(team)">Editar</button>
+          <button class="danger" @click="handleDelete(team.id)">Eliminar</button>
         </div>
       </div>
     </div>
 
     <div class="pagination" v-if="totalPages > 1">
-      <button :disabled="page === 1" @click="goToPage(page - 1)">Prev</button>
+      <button class="secondary" :disabled="page === 1" @click="goToPage(page - 1)">Prev</button>
       <span>Página {{ page }} de {{ totalPages }}</span>
-      <button :disabled="page === totalPages" @click="goToPage(page + 1)">Next</button>
+      <button class="secondary" :disabled="page === totalPages" @click="goToPage(page + 1)">Next</button>
     </div>
   </div>
 </template>
@@ -50,7 +51,7 @@ import TeamForm from '../components/TeamForm.vue';
 import { getTeams, createTeam, updateTeam, deleteTeam } from '../services/teams';
 import { useAuth } from '../composables/useAuth';
 
-const { isAuthenticated, logout } = useAuth();
+const { isAuthenticated } = useAuth();
 const router = useRouter();
 
 const teams = ref([]);
@@ -141,19 +142,30 @@ async function handleDelete(id) {
     console.error(err);
   }
 }
-function handleLogout() {
-  logout();
-  router.push('/login');
-}
 
 onMounted(loadTeams);
 </script>
 
 <style scoped>
+.teams-view {
+  width: 100%;
+  min-height: 100vh;
+  padding: 2rem 4rem;
+  background-image:
+    linear-gradient(rgba(10, 10, 15, 0.85), rgba(10, 10, 15, 0.92)),
+    url('https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bd/SoFi_Stadium_%2851126606022%29.jpg/960px-SoFi_Stadium_%2851126606022%29.jpg?utm_source=es.wikipedia.org&utm_campaign=parser&utm_content=thumbnail');
+  background-size: cover;
+  background-position: center top;
+}
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 1rem;
+}
+.title {
+  font-size: 2.2rem;
+  margin: 0;
 }
 .login-btn {
   background: #fff;
@@ -163,11 +175,27 @@ onMounted(loadTeams);
   text-decoration: none;
   font-weight: 600;
 }
+.spacer {
+  width: 130px;
+}
+.toolbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.toolbar input {
+  width: 320px;
+}
+.status {
+  text-align: center;
+  color: #8a8a95;
+}
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 1rem;
-  margin-top: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.25rem;
 }
 .card-wrapper {
   display: flex;
@@ -179,10 +207,24 @@ onMounted(loadTeams);
   gap: 0.5rem;
   justify-content: center;
 }
+.card-actions .secondary {
+  background: #1a1a22;
+  color: #ccc;
+}
+.card-actions .danger {
+  background: #3a1a1a;
+  color: #ff8a8a;
+}
 .pagination {
-  margin-top: 1rem;
+  margin-top: 2rem;
   display: flex;
-  gap: 1rem;
+  justify-content: center;
+  gap: 1.5rem;
   align-items: center;
+  color: #8a8a95;
+}
+.pagination .secondary {
+  background: #1a1a22;
+  color: #ccc;
 }
 </style>
