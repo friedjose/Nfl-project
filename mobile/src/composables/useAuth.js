@@ -1,17 +1,23 @@
-// mobile/src/composables/useAuth.js
 import { ref } from 'vue';
+import { Preferences } from '@capacitor/preferences';
 
-const token = ref(localStorage.getItem('token'));
+const token = ref(null);
+
+async function loadToken() {
+  const { value } = await Preferences.get({ key: 'token' });
+  token.value = value;
+}
+loadToken();
 
 export function useAuth() {
-  function setToken(newToken) {
+  async function setToken(newToken) {
     token.value = newToken;
-    localStorage.setItem('token', newToken);
+    await Preferences.set({ key: 'token', value: newToken });
   }
 
-  function logout() {
+  async function logout() {
     token.value = null;
-    localStorage.removeItem('token');
+    await Preferences.remove({ key: 'token' });
   }
 
   function isAuthenticated() {

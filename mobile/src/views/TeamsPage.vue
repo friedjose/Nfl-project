@@ -2,10 +2,14 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-title>Equipos NFL</ion-title>
-        <ion-buttons slot="end">
-          <ion-button @click="openCreateModal">+ Nuevo</ion-button>
-        </ion-buttons>
+          <ion-title>Equipos NFL</ion-title>
+          <ion-buttons slot="start">
+            <ion-button v-if="isAuthenticated()" @click="handleLogout">Logout</ion-button>
+            <ion-button v-else @click="router.push('/login')">Login</ion-button>
+          </ion-buttons>
+          <ion-buttons slot="end">
+            <ion-button v-if="isAuthenticated()" @click="openCreateModal">+ Nuevo</ion-button>
+          </ion-buttons>
       </ion-toolbar>
       <ion-toolbar>
         <ion-searchbar
@@ -26,8 +30,8 @@
             <h2>{{ team.name }}</h2>
             <p>{{ team.city }} · {{ team.conference }}</p>
           </ion-label>
-          <ion-button slot="end" fill="clear" @click="openEditModal(team)">Editar</ion-button>
-          <ion-button slot="end" fill="clear" color="danger" @click="confirmDelete(team)">Eliminar</ion-button>
+          <ion-button v-if="isAuthenticated()" slot="end" fill="clear" @click="openEditModal(team)">Editar</ion-button>
+          <ion-button v-if="isAuthenticated()" slot="end" fill="clear" color="danger" @click="confirmDelete(team)">Eliminar</ion-button>
         </ion-item>
       </ion-list>
 
@@ -86,11 +90,21 @@ import {
   alertController,
 } from '@ionic/vue';
 import { getTeams, createTeam, updateTeam, deleteTeam } from '../services/teams';
+import { useRouter } from 'vue-router';
+import { useAuth } from '../composables/useAuth';
+
+const router = useRouter();
+const { isAuthenticated, logout } = useAuth();
+
+function handleLogout() {
+  logout();
+  router.push('/login');
+}
 
 const teams = ref([]);
 const search = ref('');
 const page = ref(1);
-const limit = 6;
+const limit = 10;
 const totalPages = ref(1);
 const isInfiniteDisabled = ref(false);
 
