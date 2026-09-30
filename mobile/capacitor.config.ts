@@ -1,9 +1,13 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
+  appId: 'com.tuusuario.nflboxd',
   appName: 'mobile',
-  webDir: 'dist'
+  webDir: 'dist',
+  server: {
+    cleartext: true,
+    androidScheme: 'http',
+  },
 };
 
 export default config;

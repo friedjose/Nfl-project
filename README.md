@@ -76,6 +76,20 @@ El cliente móvil corre en `http://localhost:8100`.
 - Login/registro, sesión persistida con `@capacitor/preferences`
 - Header con Login/Logout centralizado
 
+### Plus: correr en Android (emulador)
+
+1. `npm install @capacitor/android`
+2. `npx cap add android`
+3. En `capacitor.config.ts`, agregar:
+   \`\`\`typescript
+   server: { cleartext: true, androidScheme: 'http' }
+   \`\`\`
+4. En `android/app/src/main/AndroidManifest.xml`, agregar `android:usesCleartextTraffic="true"` a la etiqueta `<application>`
+5. Usar `http://10.0.2.2:3000` como `VITE_API_URL` en `mobile/.env` (el emulador no resuelve `localhost` hacia tu PC)
+6. En el backend, agregar `http://localhost` a los orígenes de CORS (es el origen que reporta la WebView de Capacitor)
+7. `ionic build && npx cap sync`
+8. Abrir en Android Studio con `npx cap open android` y correr
+
 ## Pruebas de la API
 
 El archivo `requests.http` en la raíz contiene ejemplos de todas las peticiones (registro, login, y las 4 operaciones del CRUD), listos para usar con la extensión REST Client de VS Code.
