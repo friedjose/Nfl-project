@@ -1,9 +1,15 @@
-<!-- src/components/TeamCard.vue -->
 <template>
   <div class="team-card">
     <div class="image-wrapper">
       <img :src="team.image" :alt="team.name" />
       <span class="badge">{{ team.conference }}</span>
+      <button
+        v-if="isAuthenticated()"
+        class="favorite-btn"
+        @click.stop="handleToggleFavorite"
+      >
+        {{ isFavorite ? '❤️' : '🤍' }}
+      </button>
     </div>
     <h3>{{ team.name }}</h3>
     <p class="subtitle">{{ team.city }} · {{ team.conference }}</p>
@@ -11,13 +17,34 @@
 </template>
 
 <script setup>
-defineProps({
+import { ref, onMounted } from 'vue';
+import { toggleFavorite, getMyFavorites } from '../services/favorites';
+import { useAuth } from '../composables/useAuth';
+
+const props = defineProps({
   team: { type: Object, required: true },
 });
+
+const { isAuthenticated } = useAuth();
+const isFavorite = ref(false);
+
+async function checkIfFavorite() {
+  if (!isAuthenticated()) return;
+  const favorites = await getMyFavorites();
+  isFavorite.value = favorites.some((fav) => fav.teamId === props.team.id);
+}
+
+async function handleToggleFavorite() {
+  const res = await toggleFavorite(props.team.id);
+  isFavorite.value = res.favorited;
+}
+
+onMounted(checkIfFavorite);
 </script>
 
 <style scoped>
 .team-card {
+  cursor: pointer;
   background: #111117;
   border: 1px solid #22222c;
   border-radius: 10px;
@@ -48,6 +75,19 @@ defineProps({
   font-weight: 700;
   padding: 2px 6px;
   border-radius: 4px;
+}
+.favorite-btn {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: rgba(0, 0, 0, 0.6);
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  font-size: 1rem;
+  padding: 0;
+  cursor: pointer;
 }
 h3 {
   margin: 0.25rem 0;

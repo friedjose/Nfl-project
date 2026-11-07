@@ -21,13 +21,18 @@
       @submit="handleFormSubmit"
       @cancel="closeForm"
     />
+    <TeamReviews
+      v-if="showReviews"
+      :team="reviewingTeam"
+      @close="closeReviews"
+  />
 
     <p v-if="loading" class="status">Cargando...</p>
     <p v-else-if="teams.length === 0" class="status">No se encontraron equipos.</p>
 
     <div v-else class="grid">
       <div v-for="team in teams" :key="team.id" class="card-wrapper">
-        <TeamCard :team="team" />
+        <TeamCard :team="team" @click="openReviews(team)" />
         <div class="card-actions" v-if="isAuthenticated()">
           <button class="secondary" @click="openEditForm(team)">Editar</button>
           <button class="danger" @click="handleDelete(team.id)">Eliminar</button>
@@ -50,6 +55,10 @@ import TeamCard from '../components/TeamCard.vue';
 import TeamForm from '../components/TeamForm.vue';
 import { getTeams, createTeam, updateTeam, deleteTeam } from '../services/teams';
 import { useAuth } from '../composables/useAuth';
+import TeamReviews from '../components/TeamReviews.vue';
+
+const showReviews = ref(false);
+const reviewingTeam = ref(null);
 
 const { isAuthenticated } = useAuth();
 const router = useRouter();
@@ -141,6 +150,16 @@ async function handleDelete(id) {
   } catch (err) {
     console.error(err);
   }
+}
+
+function openReviews(team) {
+  reviewingTeam.value = team;
+  showReviews.value = true;
+}
+
+function closeReviews() {
+  showReviews.value = false;
+  reviewingTeam.value = null;
 }
 
 onMounted(loadTeams);

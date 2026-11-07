@@ -13,15 +13,46 @@ datasource db {
 }
 
 model Team {
-  id         Int    @id @default(autoincrement())
+  id         Int      @id @default(autoincrement())
   name       String
   city       String
   conference String
   image      String
+  reviews    Review[]
+  favorites  Favorite[]
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  username String @unique
+  id       Int      @id @default(autoincrement())
+  username String   @unique
   password String
+  reviews  Review[]
+  favorites  Favorite[]
+}
+
+model Review {
+  id        Int      @id @default(autoincrement())
+  rating    Int
+  comment   String?
+  createdAt DateTime @default(now())
+
+  team      Team     @relation(fields: [teamId], references: [id])
+  teamId    Int
+
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+
+  @@unique([userId, teamId])
+}
+
+model Favorite {
+  id     Int  @id @default(autoincrement())
+
+  team   Team @relation(fields: [teamId], references: [id])
+  teamId Int
+
+  user   User @relation(fields: [userId], references: [id])
+  userId Int
+
+  @@unique([userId, teamId])
 }

@@ -156,3 +156,32 @@ PATCH http://localhost:3000/teams/1
 
 ### 10. Listar equipos SIN token (debe funcionar igual, la lectura es pública)
 GET http://localhost:3000/teams?page=1&limit=6
+
+### Crear/actualizar una reseña (con tu token)
+POST http://localhost:3000/reviews
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3OTEzMzA4ODgsImV4cCI6MTc5MTMzNDQ4OH0.GTJ3a2-F9u4VEMeQdHV9GCLwLANOqUO_mK_pE6DGqoU
+
+{
+  "teamId": 1,
+  "rating": 5,
+  "comment": "El mejor equipo de la liga"
+}
+
+### Vuelve a mandar la misma petición -> debería ACTUALIZAR, no duplicar
+POST http://localhost:3000/reviews
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3OTEzMzA4ODgsImV4cCI6MTc5MTMzNDQ4OH0.GTJ3a2-F9u4VEMeQdHV9GCLwLANOqUO_mK_pE6DGqoU
+
+{
+  "teamId": 1,
+  "rating": 3,
+  "comment": "Cambié de opinión"
+}
+
+### Ver las reseñas de un equipo (público, sin token)
+GET http://localhost:3000/reviews/team/1
+
+### Eliminar tu reseña
+DELETE http://localhost:3000/reviews/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3OTEzMzA4ODgsImV4cCI6MTc5MTMzNDQ4OH0.GTJ3a2-F9u4VEMeQdHV9GCLwLANOqUO_mK_pE6DGqoU
