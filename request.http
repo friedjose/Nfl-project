@@ -1,158 +1,182 @@
-### Listar equipos (con paginación y búsqueda)
-GET http://localhost:3000/teams?page=1&limit=6&search=
+@baseUrl = http://localhost:5070
 
-### Crear: Kansas City Chiefs
-POST http://localhost:3000/teams
+### [SEED] Kansas City Chiefs
+POST {{baseUrl}}/teams
 Content-Type: application/json
 
-{
-  "name": "Kansas City Chiefs",
-  "city": "Kansas City",
-  "conference": "AFC",
-  "image": "https://cdn.freebiesupply.com/images/large/2x/kansas-city-chiefs-logo-transparent.png"
-}
+{ "name": "Kansas City Chiefs", "city": "Kansas City", "conference": "AFC", "image": "https://cdn.freebiesupply.com/images/large/2x/kansas-city-chiefs-logo-transparent.png" }
 
-### Crear: Philadelphia Eagles
-POST http://localhost:3000/teams
+### [SEED] Philadelphia Eagles
+POST {{baseUrl}}/teams
 Content-Type: application/json
 
-{
-  "name": "Philadelphia Eagles",
-  "city": "Philadelphia",
-  "conference": "NFC",
-  "image": "https://cdn.freebiesupply.com/images/large/2x/philadelphia-eagles-logo-transparent.png"
-}
+{ "name": "Philadelphia Eagles", "city": "Philadelphia", "conference": "NFC", "image": "https://cdn.freebiesupply.com/images/large/2x/philadelphia-eagles-logo-transparent.png" }
 
-### Crear: Dallas Cowboys
-POST http://localhost:3000/teams
+### [SEED] Dallas Cowboys
+POST {{baseUrl}}/teams
 Content-Type: application/json
 
-{
-  "name": "Dallas Cowboys",
-  "city": "Dallas",
-  "conference": "NFC",
-  "image": "https://cdn.freebiesupply.com/images/large/2x/dallas-cowboys-logo-transparent.png"
-}
+{ "name": "Dallas Cowboys", "city": "Dallas", "conference": "NFC", "image": "https://cdn.freebiesupply.com/images/large/2x/dallas-cowboys-logo-transparent.png" }
 
-### Crear: San Francisco 49ers
-POST http://localhost:3000/teams
+### [SEED] San Francisco 49ers
+POST {{baseUrl}}/teams
 Content-Type: application/json
 
-{
-  "name": "San Francisco 49ers",
-  "city": "San Francisco",
-  "conference": "NFC",
-  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/San_Francisco_49ers_logo.svg/3840px-San_Francisco_49ers_logo.svg.png"
-}
+{ "name": "San Francisco 49ers", "city": "San Francisco", "conference": "NFC", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/San_Francisco_49ers_logo.svg/3840px-San_Francisco_49ers_logo.svg.png" }
 
-### Crear: Buffalo Bills
-POST http://localhost:3000/teams
+### [SEED] Buffalo Bills
+POST {{baseUrl}}/teams
 Content-Type: application/json
 
-{
-  "name": "Buffalo Bills",
-  "city": "Buffalo",
-  "conference": "AFC",
-  "image": "https://cdn.freebiesupply.com/images/large/2x/buffalo-bills-logo-transparent.png"
-}
+{ "name": "Buffalo Bills", "city": "Buffalo", "conference": "AFC", "image": "https://cdn.freebiesupply.com/images/large/2x/buffalo-bills-logo-transparent.png" }
 
-###Crear : Miami Dolphins
-POST http://localhost:3000/teams
+### [SEED] Miami Dolphins
+POST {{baseUrl}}/teams
 Content-Type: application/json
 
-{
-  "name": "Miami Dolphins",
-  "city": "Miami",
-  "conference": "AFC",
-  "image": "https://cdn.freebiesupply.com/images/large/2x/miami-dolphins-logo-transparent.png"
-}
-###crear : New England Patriots
-POST http://localhost:3000/teams
+{ "name": "Miami Dolphins", "city": "Miami", "conference": "AFC", "image": "https://cdn.freebiesupply.com/images/large/2x/miami-dolphins-logo-transparent.png" }
+
+### [SEED] New England Patriots
+POST {{baseUrl}}/teams
 Content-Type: application/json
 
-{
-  "name": "New England Patriots",
-  "city": "New England",
-  "conference": "AFC",
-  "image": "https://cdn.freebiesupply.com/images/large/2x/new-england-patriots-logo-transparent.png"
-}
-### Buscar uno (reemplaza el 1 por el id real)
-GET http://localhost:3000/teams/1
+{ "name": "New England Patriots", "city": "New England", "conference": "AFC", "image": "https://cdn.freebiesupply.com/images/large/2x/new-england-patriots-logo-transparent.png" }
 
-### Editar uno (reemplaza el 1 por el id real)
-PATCH http://localhost:3000/teams/1
+### [SEED] Green Bay Packers
+POST {{baseUrl}}/teams
 Content-Type: application/json
 
-{
-  "name": "KC Chiefs"
-}
+{ "name": "Green Bay Packers", "city": "Green Bay", "conference": "NFC", "image": "https://cdn.freebiesupply.com/images/large/2x/green-bay-packers-logo-transparent.png" }
 
-### Eliminar uno (reemplaza el 1 por el id real)
-DELETE http://localhost:3000/teams/8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3ODg2MTU3MTksImV4cCI6MTc4ODYxOTMxOX0.zZlwDjQxPAAAeLyMHbI_97GxDjR3RZr0o9ZWnZbqlR4
-
-### 1. Registrar usuario nuevo
-POST http://localhost:3000/auth/register
+### [SEED] Pittsburgh Steelers
+POST {{baseUrl}}/teams
 Content-Type: application/json
 
-{
-  "username": "admin",
-  "password": "clave123"
-}
+{ "name": "Pittsburgh Steelers", "city": "Pittsburgh", "conference": "AFC", "image": "https://cdn.freebiesupply.com/images/large/2x/pittsburgh-steelers-logo-transparent.png" }
 
-### 2. Intentar registrar el MISMO usuario otra vez (debe dar 409 Conflict)
-POST http://localhost:3000/auth/register
+### [SEED] Seattle Seahawks
+POST {{baseUrl}}/teams
 Content-Type: application/json
 
-{
-  "username": "admin",
-  "password": "clave123"
-}
+{ "name": "Seattle Seahawks", "city": "Seattle", "conference": "NFC", "image": "https://cdn.freebiesupply.com/images/large/2x/seattle-seahawks-logo-transparent.png" }
 
-### 3. Login con credenciales correctas (debe devolver access_token)
-POST http://localhost:3000/auth/login
+### [SEED] Denver Broncos
+POST {{baseUrl}}/teams
 Content-Type: application/json
 
-{
-  "username": "admin",
-  "password": "clave123"
-}
+{ "name": "Denver Broncos", "city": "Denver", "conference": "AFC", "image": "https://cdn.freebiesupply.com/images/large/2x/denver-broncos-logo-transparent.png" }
 
-### 4. Login con contraseña incorrecta (debe dar 401 Unauthorized)
-POST http://localhost:3000/auth/login
+### [SEED] Baltimore Ravens
+POST {{baseUrl}}/teams
 Content-Type: application/json
 
-{
-  "username": "admin",
-  "password": "clave-incorrecta"
-}
+{ "name": "Baltimore Ravens", "city": "Baltimore", "conference": "AFC", "image": "https://cdn.freebiesupply.com/images/large/2x/baltimore-ravens-logo-transparent.png" }
 
-### 5. Ver perfil SIN token (debe dar 401)
-GET http://localhost:3000/auth/profile
-
-### 6. Ver perfil CON token (pega el access_token del paso 3)
-GET http://localhost:3000/auth/profile
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3ODg2MTU3MTksImV4cCI6MTc4ODYxOTMxOX0.zZlwDjQxPAAAeLyMHbI_97GxDjR3RZr0o9ZWnZbqlR4
-
-### 7. Crear equipo SIN token (debe dar 401, confirma que el guard protege escritura)
-POST http://localhost:3000/teams
+### [SEED] Cincinnati Bengals
+POST {{baseUrl}}/teams
 Content-Type: application/json
 
-{
-  "name": "Test Team", "city": "Test City", "conference": "AFC", "image": "https://picsum.photos/300/200"
-}
+{ "name": "Cincinnati Bengals", "city": "Cincinnati", "conference": "AFC", "image": "https://cdn.freebiesupply.com/images/large/2x/cincinnati-bengals-logo-transparent.png" }
 
-### 8. Crear equipo CON token (debe funcionar, 201 Created)
-POST http://localhost:3000/teams
+### [SEED] Detroit Lions
+POST {{baseUrl}}/teams
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3ODg2MTU3MTksImV4cCI6MTc4ODYxOTMxOX0.zZlwDjQxPAAAeLyMHbI_97GxDjR3RZr0o9ZWnZbqlR4
 
-{
-  "name": "Test Team", "city": "Test City", "conference": "AFC", "image": "https://picsum.photos/300/200"
-}
+{ "name": "Detroit Lions", "city": "Detroit", "conference": "NFC", "image": "https://cdn.freebiesupply.com/images/large/2x/detroit-lions-logo-transparent.png" }
 
-### 9. Editar equipo SIN token (debe dar 401)
-PATCH http://localhost:3000/teams/1
+### [SEED] Minnesota Vikings
+POST {{baseUrl}}/teams
+Content-Type: application/json
 
-### 10. Listar equipos SIN token (debe funcionar igual, la lectura es pública)
-GET http://localhost:3000/teams?page=1&limit=6
+{ "name": "Minnesota Vikings", "city": "Minneapolis", "conference": "NFC", "image": "https://cdn.freebiesupply.com/images/large/2x/minnesota-vikings-logo-transparent.png" }
+
+### [SEED] Las Vegas Raiders
+POST {{baseUrl}}/teams
+Content-Type: application/json
+
+{ "name": "Las Vegas Raiders", "city": "Las Vegas", "conference": "AFC", "image": "https://cdn.freebiesupply.com/images/large/2x/las-vegas-raiders-logo-transparent.png" }
+
+### [LECTURA] Página 1 (máximo 6 en data)
+GET {{baseUrl}}/teams?page=1&limit=6&search=
+
+### [LECTURA] Página 2
+GET {{baseUrl}}/teams?page=2&limit=6&search=
+
+### [LECTURA] Página 3
+GET {{baseUrl}}/teams?page=3&limit=6&search=
+
+### [LECTURA] Búsqueda sin importar mayúsculas (debe encontrar Chiefs)
+GET {{baseUrl}}/teams?page=1&limit=6&search=CHIEFS
+
+### [LECTURA] Buscar uno
+GET {{baseUrl}}/teams/1
+
+### [LECTURA] Id que no existe (debe dar 404)
+GET {{baseUrl}}/teams/9999
+
+### [AUTH] 1. Registrar usuario (debe dar 201)
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{ "username": "admin", "password": "clave123" }
+
+### [AUTH] 2. Registrar el MISMO usuario otra vez (debe dar 409)
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{ "username": "admin", "password": "clave123" }
+
+### [AUTH] 3. Login correcto (devuelve access_token y lo guarda)
+# @name login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{ "username": "admin", "password": "clave123" }
+
+###
+
+@token = {{login.response.body.$.access_token}}
+
+### [AUTH] 4. Login con contraseña incorrecta (debe dar 401)
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{ "username": "admin", "password": "clave-incorrecta" }
+
+### [AUTH] 5. Perfil SIN token (debe dar 401)
+GET {{baseUrl}}/auth/profile
+
+### [AUTH] 6. Perfil CON token (debe dar 200)
+GET {{baseUrl}}/auth/profile
+Authorization: Bearer {{token}}
+
+### [ESCRITURA] Crear SIN token (debe dar 401)
+POST {{baseUrl}}/teams
+Content-Type: application/json
+
+{ "name": "Test Team", "city": "Test City", "conference": "AFC", "image": "https://picsum.photos/300/200" }
+
+### [ESCRITURA] Crear CON token (debe dar 201)
+# @name createTest
+POST {{baseUrl}}/teams
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{ "name": "Test Team", "city": "Test City", "conference": "AFC", "image": "https://picsum.photos/300/200" }
+
+### [ESCRITURA] Editar SIN token (debe dar 401)
+PATCH {{baseUrl}}/teams/1
+Content-Type: application/json
+
+{ "name": "KC Chiefs" }
+
+### [ESCRITURA] Editar CON token (solo cambia el name)
+PATCH {{baseUrl}}/teams/1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{ "name": "KC Chiefs" }
+
+### [ESCRITURA] Eliminar el Test Team que acabas de crear (debe dar 200)
+DELETE {{baseUrl}}/teams/{{createTest.response.body.$.id}}
+Authorization: Bearer {{token}}

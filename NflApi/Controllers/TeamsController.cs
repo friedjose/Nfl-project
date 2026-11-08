@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using NflApi.Dtos;
 using NflApi.Models;
 using NflApi.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace NflApi.Controllers;
 
@@ -33,6 +34,7 @@ public class TeamsController : ControllerBase
         return Ok(team);
     }
 
+    [Authorize]
     [HttpPost]
     public async Task<ActionResult<Team>> Create(CreateTeamDto dto)
     {
@@ -40,6 +42,7 @@ public class TeamsController : ControllerBase
         return CreatedAtAction(nameof(FindOne), new { id = team.Id }, team);
     }
 
+    [Authorize]
     [HttpPatch("{id}")]
     public async Task<ActionResult<Team>> Update(int id, UpdateTeamDto dto)
     {
@@ -47,7 +50,8 @@ public class TeamsController : ControllerBase
         if (team is null) return NotFound(new { message = "Equipo no encontrado" });
         return Ok(team);
     }
-
+    
+    [Authorize]
     [HttpDelete("{id}")]
     public async Task<ActionResult<Team>> Remove(int id)
     {
